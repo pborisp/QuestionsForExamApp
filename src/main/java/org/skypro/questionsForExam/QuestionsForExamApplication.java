@@ -1,13 +1,13 @@
-package org.skypro.quesrionsForExam;
+package org.skypro.questionsForExam;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class QuesrionsForExamApplication {
+public class QuestionsForExamApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(QuesrionsForExamApplication.class, args);
+		SpringApplication.run(QuestionsForExamApplication.class, args);
 	}
 
 }

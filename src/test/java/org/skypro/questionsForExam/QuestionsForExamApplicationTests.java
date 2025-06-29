@@ -1,10 +1,10 @@
-package org.skypro.quesrionsForExam;
+package org.skypro.questionsForExam;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class QuesrionsForExamApplicationTests {
+class QuestionsForExamApplicationTests {
 
 	@Test
 	void contextLoads() {
