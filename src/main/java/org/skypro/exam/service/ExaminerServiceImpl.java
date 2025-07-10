@@ -1,28 +1,35 @@
 package org.skypro.exam.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.skypro.exam.model.Question;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
-public class ExaminerServiceImpl implements ExaminerService{
-    Random random;
-    QuestionService questionService;
+public class ExaminerServiceImpl implements ExaminerService {
+//    private final Random random;
+    private final QuestionService questionService;
 
-    @Autowired
-    public ExaminerServiceImpl(JavaQuestionService questionService) {
+    public ExaminerServiceImpl(QuestionService questionService) {
+//        this.random = random;
         this.questionService = questionService;
     }
 
-    public Set<QuestionService> getQuestion(int amount) {
-        Set<QuestionService> listOfQuestion = new HashSet<>();
-        if (questionService.getSize() < amount) {
+    @Override
+    public Set<Question> getQuestion(int amount) {
+        Set<Question> listOfQuestion = new HashSet<>();
+        listOfQuestion.addAll(questionService.getAll());
+        if (amount > listOfQuestion.size()) {
             throw new ReqestException("Кол-во запрошенных вопросов больше общего кол-ва");
         }
-        for (int i = 0; i < amount; i++) {
-            listOfQuestion.add (questionService.getRandomQuestion());
+
+        Set<Question> result = new HashSet<>();
+        int count = 0;
+        while (count < amount) {
+            if (result.add(questionService.getRandomQuestion())) {
+                count++;
+            }
         }
-        return listOfQuestion;
+        return result;
     }
 }

@@ -3,12 +3,15 @@ package org.skypro.exam.service;
 
 import org.skypro.exam.model.Question;
 
-public interface QuestionService {
-    String getTypeQuestion();
+import java.util.Collection;
 
-    String getTypeAnswer();
+public interface QuestionService {
 
     Question getRandomQuestion();
 
-    Integer getSize();
+    void addQuestionAnswer(String question, String answer);
+
+    String remove(String question, String answer);
+
+    Collection<Question> getAll();
 }

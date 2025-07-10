@@ -4,7 +4,7 @@ import org.skypro.exam.service.QuestionService;
 
 import java.util.Objects;
 
-public class Question implements QuestionService {
+public class Question {
     private String question;
     private String answer;
 
@@ -31,25 +31,5 @@ public class Question implements QuestionService {
     @Override
     public int hashCode() {
         return Objects.hash(question, answer);
-    }
-
-    @Override
-    public String getTypeQuestion() {
-        return question;
-    }
-
-    @Override
-    public String getTypeAnswer() {
-        return answer;
-    }
-
-    @Override
-    public Question getRandomQuestion() {
-        return null;
-    }
-
-    @Override
-    public Integer getSize() {
-        return 0;
     }
 }

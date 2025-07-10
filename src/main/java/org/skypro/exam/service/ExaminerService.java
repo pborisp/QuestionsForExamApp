@@ -1,7 +1,9 @@
 package org.skypro.exam.service;
 
-import java.util.Set;
+import org.skypro.exam.model.Question;
+
+import java.util.Collection;
 
 public interface ExaminerService {
-    Set<QuestionService> getQuestion(int amount);
+    Collection<Question> getQuestion(int amount);
 }
