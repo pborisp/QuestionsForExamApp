@@ -3,26 +3,26 @@ package org.skypro.exam;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.skypro.exam.model.Question;
 import org.skypro.exam.service.JavaQuestionService;
 import org.skypro.exam.service.ReqestException;
-import static org.mockito.ArgumentMatchers.any;
 
-
-import java.util.*;
 
 @ExtendWith(MockitoExtension.class)
 public class JavaQuestionServiceTest {
 
-    @Mock
-    private Question question;
+    private final JavaQuestionService javaQuestionService = new JavaQuestionService();
 
-    @InjectMocks
-    private JavaQuestionService javaQuestionService;
+    @Test
+    void AddQuestionAnswer_whenIsNotNull_ThenOk() {
+        String question = "qTest";
+        String answer = "aTest";
+        Question questionAnswer = new Question(question, answer);
+        javaQuestionService.addQuestionAnswer(question, answer);
+
+        Assertions.assertEquals(true, javaQuestionService.getAll().contains(questionAnswer));
+    }
 
     @Test
     void RemoveQuestion_whenQuestionNotFound_ThenThrowReqestException() {
@@ -34,20 +34,29 @@ public class JavaQuestionServiceTest {
     }
 
     @Test
-    void givenQuestion_whenGetAll_ThenQuestionIsNotNull() {
+    void RemoveQuestion_whenQuestinFound_ThenOk() {
+        String question = "qTest";
+        String answer = "aTest";
+        Question questionAnswer = new Question(question, answer);
+        javaQuestionService.addQuestionAnswer(question, answer);
 
-        Collection<Question> result = javaQuestionService.getAll();
+        javaQuestionService.remove(question, answer);
 
-        Assertions.assertNotNull(result);
+        Assertions.assertEquals(false, javaQuestionService.getAll().contains(questionAnswer));
     }
 
     @Test
-    void givenSizeMap_whenGetRandomQuestion_thenRandomQuestionNotNull() {
-        int size = javaQuestionService.getSize();
-        Question result = javaQuestionService.getRandomQuestion();
-
-        Assertions.assertNotNull(size);
-        Assertions.assertNotNull(result);
+    void getRandomQuestion_whenQuestionsSizeIsNull_ThenThrowRequestException() {
+        Assertions.assertThrows(ReqestException.class, () -> javaQuestionService.getRandomQuestion());
     }
 
+    @Test
+    void getRandomQuestion_whenQuestionsSizeMoreNull_ThenFindQuestion() {
+        String question = "qTest";
+        String answer = "aTest";
+        Question questionAnswer = new Question(question, answer);
+        javaQuestionService.addQuestionAnswer(question, answer);
+
+        Assertions.assertEquals(questionAnswer, javaQuestionService.getRandomQuestion());
+    }
 }

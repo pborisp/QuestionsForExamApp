@@ -3,51 +3,41 @@ package org.skypro.exam;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.skypro.exam.model.Question;
-import org.skypro.exam.service.ExaminerServiceImpl;
-import org.skypro.exam.service.JavaQuestionService;
-import org.skypro.exam.service.QuestionService;
-import org.skypro.exam.service.ReqestException;
+import org.skypro.exam.service.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @ExtendWith(MockitoExtension.class)
 public class ExaminerServiceImplTest {
-    @Mock
-    private Question question;
+    private final QuestionService questionService = new JavaQuestionService();
+    private final ExaminerServiceImpl examinerServiceImpl = new ExaminerServiceImpl(questionService);
 
-    @Mock
-    private JavaQuestionService javaQuestionService;
-
-    @InjectMocks
-    private ExaminerServiceImpl examinerServiceImpl;
 
     @Test
-    void givenRandomQuestion_whenGetQuestion_thenRandomQuestionTimesOk() {
-        int amount = javaQuestionService.getSize();
-
-        examinerServiceImpl.getQuestion(amount);
-
-        Mockito.verify(javaQuestionService, Mockito.times(amount)).getRandomQuestion();
-    }
-
-    @Test
-    void givenAmount_0_whenGetQuestion_thenGetNull() {
-        int amount = 0;
-
-        Set<QuestionService> questions = examinerServiceImpl.getQuestion(amount);
-
-        Assertions.assertNotNull(questions);
-    }
-
-    @Test
-    void givenAmountMoreThenQuestions_whenGetQuestion_thenThrowReqestException() {
-        int amount = javaQuestionService.getSize() + 1;
+    void getQuestions_whenAmountMoreQuestionsSize_ThenThrowRequestException() {
+        questionService.addQuestionAnswer("1","1");
+        questionService.addQuestionAnswer("2", "2");
+        int amount = 3;
 
         Assertions.assertThrows(ReqestException.class, () -> examinerServiceImpl.getQuestion(amount));
     }
+
+    @Test
+    void getQuestions_whenQuestionSizeMoreAmount_ThenOk() {
+        Set<Question> questions = new HashSet<>();
+        Question questionAnswer = new Question("1", "2");
+        questions.add(questionAnswer);
+
+        questionService.addQuestionAnswer("1","2");
+        int amount = 1;
+
+        Set<Question> result = new HashSet<>(examinerServiceImpl.getQuestion(amount));
+
+        Assertions.assertEquals(questions, result);
+    }
+
 }
+

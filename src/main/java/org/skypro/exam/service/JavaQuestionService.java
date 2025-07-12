@@ -20,6 +20,9 @@ public class JavaQuestionService implements QuestionService {
 
     @Override
     public Question getRandomQuestion() {
+        if (questions.size() == 0) {
+            throw  new ReqestException("Список вопросов пуст");
+        }
         int number = ThreadLocalRandom.current().nextInt(0, questions.size());
         List<Question> listOfQuestion = new ArrayList<>(questions);
         return listOfQuestion.get(number);
@@ -34,8 +37,7 @@ public class JavaQuestionService implements QuestionService {
     @Override
     public String remove(String question, String answer) {
         Question questionAnswer = new Question(question, answer);
-        if (questions.contains(questionAnswer)) {
-            questions.remove(questionAnswer);
+        if (questions.remove(questionAnswer)) {
             return "Вопрос успешно удален";
         } else {
             throw new ReqestException("Невозможно удалить вопрос - отсутствует в списке");
