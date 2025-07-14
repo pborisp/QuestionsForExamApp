@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>org.skypro</groupId>
-	<artifactId>quesrionsForExam</artifactId>
+	<artifactId>exam</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>quesrionsForExam</name>
+	<name>exam</name>
 	<description>An application that generates questions for the exam</description>
 	<url/>
 	<licenses>
