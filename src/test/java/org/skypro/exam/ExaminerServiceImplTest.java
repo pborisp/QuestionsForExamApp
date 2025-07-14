@@ -12,17 +12,18 @@ import java.util.Set;
 
 @ExtendWith(MockitoExtension.class)
 public class ExaminerServiceImplTest {
-    private final QuestionService questionService = new JavaQuestionService();
-    private final ExaminerServiceImpl examinerServiceImpl = new ExaminerServiceImpl(questionService);
+    private final JavaQuestionService javaQuestionService = new JavaQuestionService();
+    private final MathQuestionSrvice mathQuestionSrvice = new MathQuestionSrvice();
+    private final ExaminerService examinerServiceImpl = new ExaminerServiceImpl(mathQuestionSrvice, javaQuestionService);
 
 
     @Test
     void getQuestions_whenAmountMoreQuestionsSize_ThenThrowRequestException() {
-        questionService.addQuestionAnswer("1","1");
-        questionService.addQuestionAnswer("2", "2");
+        javaQuestionService.addQuestionAnswer("1","1");
+        javaQuestionService.addQuestionAnswer("2", "2");
         int amount = 3;
 
-        Assertions.assertThrows(ReqestException.class, () -> examinerServiceImpl.getQuestion(amount));
+        Assertions.assertThrows(ReqestException.class, () -> examinerServiceImpl.getJavaQuestion(amount));
     }
 
     @Test
@@ -31,10 +32,10 @@ public class ExaminerServiceImplTest {
         Question questionAnswer = new Question("1", "2");
         questions.add(questionAnswer);
 
-        questionService.addQuestionAnswer("1","2");
+        javaQuestionService.addQuestionAnswer("1","2");
         int amount = 1;
 
-        Set<Question> result = new HashSet<>(examinerServiceImpl.getQuestion(amount));
+        Set<Question> result = new HashSet<>(examinerServiceImpl.getJavaQuestion(amount));
 
         Assertions.assertEquals(questions, result);
     }

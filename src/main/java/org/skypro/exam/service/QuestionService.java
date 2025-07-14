@@ -9,9 +9,4 @@ public interface QuestionService {
 
     Question getRandomQuestion();
 
-    void addQuestionAnswer(String question, String answer);
-
-    String remove(String question, String answer);
-
-    Collection<Question> getAll();
 }

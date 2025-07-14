@@ -2,10 +2,6 @@ package org.skypro.exam.controller;
 
 import org.skypro.exam.model.Question;
 import org.skypro.exam.service.ExaminerService;
-import org.skypro.exam.service.ExaminerServiceImpl;
-import org.skypro.exam.service.QuestionService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,4 +19,15 @@ public class ExamController {
     public Collection<Question> getQuestions(@PathVariable("amount") int amount) {
         return examinerService.getQuestion(amount);
     }
+
+    @GetMapping("/exam/get/math/{amount}")
+    public Collection<Question> getQuestionsMath(@PathVariable("amount") int amount) {
+        return examinerService.getMathQuestion(amount);
+    }
+
+    @GetMapping("/exam/get/java/{amount}")
+    public Collection<Question> getQuestionsJava(@PathVariable("amount") int amount) {
+        return examinerService.getJavaQuestion(amount);
+    }
+
 }

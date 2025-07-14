@@ -1,41 +1,39 @@
 package org.skypro.exam.service;
 
 import org.skypro.exam.model.Question;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Service
-public class JavaQuestionService implements QuestionService, QuestionRepository {
-    private final Set<Question> questionsJava;
+public class MathQuestionSrvice implements QuestionService, QuestionRepository{
+    private final Set<Question> questionsMath;
 
-    public JavaQuestionService() {
-        this.questionsJava = new HashSet<>();
+    public MathQuestionSrvice() {
+        this.questionsMath = new HashSet<>();
     }
 
     @Override
     public Question getRandomQuestion() {
-        if (questionsJava.isEmpty()) {
+        if (questionsMath.size() == 0) {
             throw  new ReqestException("Список вопросов пуст");
         }
-        int number = ThreadLocalRandom.current().nextInt(0, questionsJava.size());
-        List<Question> listOfQuestion = new ArrayList<>(questionsJava);
+        int number = ThreadLocalRandom.current().nextInt(0, questionsMath.size());
+        List<Question> listOfQuestion = new ArrayList<>(questionsMath);
         return listOfQuestion.get(number);
     }
 
     @Override
     public void addQuestionAnswer(String question, String answer) {
         Question questionAnswer = new Question(question, answer);
-        this.questionsJava.add(questionAnswer);
+        this.questionsMath.add(questionAnswer);
     }
 
     @Override
     public String remove(String question, String answer) {
         Question questionAnswer = new Question(question, answer);
-        if (questionsJava.remove(questionAnswer)) {
+        if (questionsMath.remove(questionAnswer)) {
             return "Вопрос успешно удален";
         } else {
             throw new ReqestException("Невозможно удалить вопрос - отсутствует в списке");
@@ -44,7 +42,6 @@ public class JavaQuestionService implements QuestionService, QuestionRepository 
 
     @Override
     public Collection<Question> getAll() {
-        return questionsJava;
+        return questionsMath;
     }
-
 }

@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.skypro.exam.model.Question;
 import org.skypro.exam.service.JavaQuestionService;
+import org.skypro.exam.service.QuestionService;
 import org.skypro.exam.service.ReqestException;
 
 
@@ -15,7 +16,7 @@ public class JavaQuestionServiceTest {
     private final JavaQuestionService javaQuestionService = new JavaQuestionService();
 
     @Test
-    void AddQuestionAnswer_whenIsNotNull_ThenOk() {
+    void addQuestionAnswer_whenIsNotNull_ThenOk() {
         String question = "qTest";
         String answer = "aTest";
         Question questionAnswer = new Question(question, answer);
@@ -25,7 +26,7 @@ public class JavaQuestionServiceTest {
     }
 
     @Test
-    void RemoveQuestion_whenQuestionNotFound_ThenThrowReqestException() {
+    void removeQuestion_whenQuestionNotFound_ThenThrowReqestException() {
         String question = "qTest";
         String answer = "aTest";
         javaQuestionService.addQuestionAnswer(question, answer);
@@ -34,7 +35,7 @@ public class JavaQuestionServiceTest {
     }
 
     @Test
-    void RemoveQuestion_whenQuestinFound_ThenOk() {
+    void removeQuestion_whenQuestinFound_ThenOk() {
         String question = "qTest";
         String answer = "aTest";
         Question questionAnswer = new Question(question, answer);
